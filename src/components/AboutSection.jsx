@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import RippleButton from "./RippleButton.jsx";
-
+import about1 from "../assets/images/about1.jpeg"
 const highlights = [
   "Olympic-standard training methodology",
   "Certified lifeguards on every pool deck",
@@ -23,7 +23,7 @@ const AboutSection = () => {
         >
           <div className="rounded-3xl overflow-hidden shadow-2xl aspect-[4/5]">
             <img
-              src="/images/about-academy.jpg"
+              src={about1}
               alt="Falcon Swimming Academy training session"
               className="w-full h-full object-cover"
             />

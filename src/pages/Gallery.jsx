@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import gall3 from "../assets/images/about3.jpeg"
 // Placeholder gallery — swap emoji tiles for real <img> photos when available
 const galleryItems = [
   { emoji: "🏊‍♀️", color: "bg-sky" },

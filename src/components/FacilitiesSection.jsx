@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import fact from "../assets/images/about1.jpeg"
 const facilities = [
   { img: "/images/facility-pool.jpg", title: "Olympic-Standard Pool", desc: "Temperature-controlled, professionally maintained." },
   { img: "/images/facility-kids.jpg", title: "Kids Training Zone", desc: "Shallow, safe pools designed for young beginners." },
@@ -36,7 +36,7 @@ const FacilitiesSection = () => {
               className="relative rounded-3xl overflow-hidden shadow-lg group aspect-[3/4]"
             >
               <img
-                src={facility.img}
+                src={fact}
                 alt={facility.title}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import RippleButton from "./RippleButton.jsx";
-
+import gall from "../assets/images/about2.jpeg"
 // Save matching images to frontend/public/images/gallery/
 const previewImages = [
   { src: "/images/gallery/gallery-1.jpg", size: "row-span-2" },
@@ -38,7 +38,7 @@ const GalleryPreview = () => {
               className={`relative rounded-2xl overflow-hidden shadow-md cursor-pointer group ${img.size}`}
             >
               <img
-                src={img.src}
+                src={gall}
                 alt={`Falcon Swimming Academy moment ${idx + 1}`}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
               />
