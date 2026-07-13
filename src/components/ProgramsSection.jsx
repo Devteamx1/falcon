@@ -47,7 +47,7 @@ const ProgramsSection = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 glass-card">
+          <div className="text-center py-8 sm:py-20 sm:text-sm glass-card">
             <p className="text-darkNavy/40">
               Programs will appear here once added from the admin dashboard.
             </p>

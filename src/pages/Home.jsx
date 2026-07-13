@@ -12,6 +12,7 @@ import ScheduleSection from "../components/ScheduleSection.jsx";
 import EventsSection from "../components/EventsSection.jsx";
 import FAQSection from "../components/FAQSection.jsx";
 import ContactSection from "../components/ContactSection.jsx";
+// import Demo from "./dashboard/Demo.jsx";
 
 const Home = () => {
   return (
@@ -30,6 +31,7 @@ const Home = () => {
       <EventsSection />
       <FAQSection />
       <ContactSection />
+      {/* <Demo/> */}
     </main>
   );
 };

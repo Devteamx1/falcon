@@ -12,7 +12,9 @@ const navLinks = [
   { name: "Coaches", path: "/trainers" },
   { name: "Gallery", path: "/gallery" },
   { name: "Schedule", path: "/schedule" },
-  { name: "Contact", path: "/contact" }
+  { name: "Contact", path: "/contact" },
+  // { name: "Demo", path: "/demo" }
+
 ];
 
 const Navbar = () => {
