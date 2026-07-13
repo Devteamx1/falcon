@@ -11,7 +11,7 @@ const timeline = [
   { year: "2014", event: "Falcon Swimming Academy founded with a single training pool." },
   { year: "2017", event: "Expanded to 3 pools and launched our competitive training squad." },
   { year: "2020", event: "Introduced digital progress tracking for all students and parents." },
-  { year: "2023", event: "Crossed 3000+ trained swimmers and 180+ competition medals." },
+  { year: "2023", event: "Crossed 3000+ trained swimmers and 180++ competition medals." },
 ];
 
 const About = () => {
