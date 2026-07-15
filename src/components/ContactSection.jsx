@@ -6,20 +6,54 @@ const ContactSection = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [sent, setSent] = useState(false);
   const [sending, setSending] = useState(false);
-
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  // const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+     e.preventDefault();
+      if (!/^[A-Za-z\s]+$/.test(form.name.trim())) {
+      setNameError("Only letters are allowed.");
+      return;
+      }
     setSending(true);
     // TODO: wire to backend /api/contact
     setTimeout(() => {
       setSent(true);
       setSending(false);
       setForm({ name: "", email: "", phone: "", message: "" });
+      setNameError("");
     }, 800);
   };
 
+    const handleChange = (e) => {
+  const { name, value } = e.target;
+  if (name === "name") {
+    // Only letters and spaces
+    if (/^[A-Za-z\s]*$/.test(value)) {
+      setForm({ ...form, [name]: value });
+      setNameError("");
+    } else {
+      setNameError("Only letters are allowed.");
+    }
+    return;
+  }
+  if (name === "email") {
+  setForm({ ...form, [name]: value });
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (value === "" || emailRegex.test(value)) {
+    setEmailError("");
+  } else {
+    setEmailError("Please enter a valid email address.");
+  }
+
+  return;
+}
+
+  setForm({ ...form, [name]: value });
+};
   return (
     <section className="bg-bgLight py-16 md:py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -69,24 +103,32 @@ const ContactSection = () => {
             )}
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-              <input
-                type="text" name="name" placeholder="Your Name" value={form.name}
-                onChange={handleChange} required
-               className="w-full px-4 py-3 rounded-2xl border-2 border-bgLight focus:outline-none focus:border-primary transition"
+               <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={form.name}
+                onChange={handleChange}
+                required
+                className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                  nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
               />
-              <input
-                type="tel" name="phone" placeholder="Phone Number" value={form.phone}
-                onChange={handleChange} required
-                className="px-4 py-3.5 rounded-2xl border-2 border-bgLight focus:outline-none focus:border-primary transition"
-              />
-            </div>
-
+              {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
             <input
-              type="email" name="email" placeholder="Email Address" value={form.email}
-              onChange={handleChange} required
-              className="w-full px-4 py-3.5 rounded-2xl border-2 border-bgLight focus:outline-none focus:border-primary transition mb-4"
-            />
-
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={form.email}
+            onChange={handleChange}
+            required
+            className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition ${
+                emailError
+                  ? "border-red-500"
+                  : "border-cloudSoft focus:border-sky"
+              }`}
+              />
+              {emailError && (<p className="text-red-500 text-sm mt-2">{emailError}</p>)}
+            </div>
             <textarea
               name="message" placeholder="How can we help?" rows={5} value={form.message}
               onChange={handleChange} required

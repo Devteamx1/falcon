@@ -8,8 +8,8 @@ import { useLocation } from "react-router-dom";
 const navLinks = [
   { name: "Home", path: "/" },
   { name: "About", path: "/about" },
-  { name: "Programs", path: "/courses" },
-  { name: "Coaches", path: "/trainers" },
+  // { name: "Programs", path: "/courses" },
+  // { name: "Coaches", path: "/trainers" },
   { name: "Gallery", path: "/gallery" },
   { name: "Schedule", path: "/schedule" },
   { name: "Contact", path: "/contact" },
@@ -112,7 +112,7 @@ const Navbar = () => {
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: "auto", opacity: 1 }}
-          className="lg:hidden bg-darkNavy/95 backdrop-blur-md px-6 pb-6 mt-4 flex flex-col gap-4"
+          className="lg:hidden  px-6 pb-6 mt-4 flex flex-col gap-4"
         >
           {navLinks.map((link) => (
             <NavLink key={link.name} to={link.path} onClick={() => setIsOpen(false)} className="text-white/90 text-sm font-semibold">

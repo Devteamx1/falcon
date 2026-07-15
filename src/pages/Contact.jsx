@@ -4,16 +4,55 @@ import { motion } from "framer-motion";
 const Contact = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
-
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  // const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
+      if (!/^[A-Za-z\s]+$/.test(form.name.trim())) {
+    setNameError("Only letters are allowed.");
+    return;
+  }
+  // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   if (!emailRegex.test(form.email.trim())) {
+  //     alert("Please enter a valid email address.");
+  //     return;
+  //   }
     // TODO: wire to backend /api/contact once contact route is built
     setSent(true);
     setForm({ name: "", email: "", message: "" });
+    setNameError("");
   };
 
+  const handleChange = (e) => {
+  const { name, value } = e.target;
+  if (name === "name") {
+    // Only letters and spaces
+    if (/^[A-Za-z\s]*$/.test(value)) {
+      setForm({ ...form, [name]: value });
+      setNameError("");
+    } else {
+      setNameError("Only letters are allowed.");
+    }
+    return;
+  }
+  if (name === "email") {
+  setForm({ ...form, [name]: value });
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (value === "" || emailRegex.test(value)) {
+    setEmailError("");
+  } else {
+    setEmailError("Please enter a valid email address.");
+  }
+
+  return;
+}
+
+  setForm({ ...form, [name]: value });
+};
   return (
     <div className="bg-cloudSoft pt-32 min-h-screen">
       <div className="max-w-5xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-12 items-start">
@@ -68,8 +107,10 @@ const Contact = () => {
             value={form.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition"
+            className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+              nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
           />
+           {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
           <input
             type="email"
             name="email"
@@ -77,8 +118,13 @@ const Contact = () => {
             value={form.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition"
-          />
+            className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition ${
+                emailError
+                  ? "border-red-500"
+                  : "border-cloudSoft focus:border-sky"
+              }`}
+              />
+              {emailError && (<p className="text-red-500 text-sm mt-2">{emailError}</p>)}
           <textarea
             name="message"
             placeholder="Your Message"
@@ -94,6 +140,8 @@ const Contact = () => {
           >
             Send Message 💌
           </button>
+           {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
+
         </motion.form>
       </div>
     </div>

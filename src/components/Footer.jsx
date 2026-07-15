@@ -46,7 +46,8 @@ const Footer = () => {
       <li><Link to="/login" className="hover:text-secondary transition">Student Login</Link></li>
       <li><Link to="/login" className="hover:text-secondary transition">Parent Login</Link></li>
       <li><Link to="/register" className="hover:text-secondary transition">Enroll Now</Link></li>
-      <li><Link to="/pricing" className="hover:text-secondary transition">Membership Plans</Link></li>
+      <li><Link to="/pricing" onClick={() => window.scrollTo({ top: 0, behavior: "smooth",})}
+       className="hover:text-secondary transition"> Membership Plans</Link></li>
     </ul>
   </div>
   {/* Contact */}

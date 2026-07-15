@@ -30,6 +30,15 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   const [active, setActive] = useState(0);
+  const handleSwipe = (direction) => {
+  if (direction === "left") {
+    setActive((prev) => (prev + 1) % testimonials.length);
+  } else {
+    setActive((prev) =>
+      prev === 0 ? testimonials.length - 1 : prev - 1
+    );
+  }
+};
 
   return (
     <section className="bg-dark-gradient py-24 relative overflow-hidden">
@@ -46,12 +55,22 @@ const TestimonialsSection = () => {
         </div>
 
         <AnimatePresence mode="wait">
-          <motion.div
+        <motion.div
             key={active}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.2}
+            onDragEnd={(event, info) => {
+              if (info.offset.x < -50) {
+                handleSwipe("left");
+              } else if (info.offset.x > 50) {
+                handleSwipe("right");
+              }
+            }}
             className="glass-dark rounded-3xl p-10 text-center"
           >
             <div

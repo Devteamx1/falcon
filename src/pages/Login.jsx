@@ -29,7 +29,6 @@ const Login = () => {
     try {
       const { data } = await api.post("/auth/login", { ...form, role: activeRole });
       login(data);
-
       if (data.role === "admin" || data.role === "coach") {
         window.location.href = import.meta.env.VITE_ADMIN_URL || "http://localhost:5174";
       } else {

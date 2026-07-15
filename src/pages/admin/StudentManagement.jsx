@@ -60,15 +60,13 @@ const StudentManagement = () => {
 
   return (
     <div className="space-y-8 p-10">
-
       {/* Header */}
-
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-5">
 
         <div className="flex items-center gap-4">
               <button
                 onClick={() => navigate("/admin")}
-                className="w-15 h-15 rounded-xl bg-white shadow-md border border-gray-200 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 hover:scale-105 mr-5"
+                className="w-25 h-25 rounded-xl bg-white shadow-md border border-gray-200 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-all duration-300 hover:scale-105 mr-5"
               >
                 <FaArrowLeft />
               </button>

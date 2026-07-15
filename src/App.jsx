@@ -32,6 +32,7 @@ import AttendanceManagement from "./pages/admin/AttendanceManagement"
 import ReportsManagement from "./pages/admin/ReportsManagement";
 import CommunicationManagement from "./pages/admin/CommunicationManagement";
 import PaymentManagement from "./pages/admin/PaymentManagement";
+import ScrollTop from "./components/ScrollTop.jsx";
 function App() { 
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
@@ -41,6 +42,7 @@ function App() {
       <LoadingScreen />
          {!isAdminRoute && <Navbar />}
          {/* Website */}
+         <ScrollTop/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

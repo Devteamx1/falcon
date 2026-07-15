@@ -53,16 +53,17 @@ const Courses = () => {
         {/* Filter Pills */}
         <div className="flex flex-wrap justify-center gap-3 mb-10">
           {levels.map((lvl) => (
-            <button
+           <button
               key={lvl}
               onClick={() => setFilter(lvl)}
-              className={`px-5 py-2.5 rounded-full text-sm font-bold transition ${
+              className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border-2 ${
                 filter === lvl
-                  ? "bg-sky text-white shadow-md"
-                  : "bg-white text-inkNavy/60 border-2 border-cloudSoft hover:border-sky"
+                  ? "bg-sky-600 border-sky-600 text-white shadow-lg scale-105"
+                  : "bg-white text-gray-700 border-cloudSoft hover:bg-sky-100 hover:border-sky-500 hover:text-sky-700"
               }`}
             >
-              {levelEmoji[lvl]} {lvl}
+              <span className="mr-2">{levelEmoji[lvl]}</span>
+              {lvl}
             </button>
           ))}
         </div>
