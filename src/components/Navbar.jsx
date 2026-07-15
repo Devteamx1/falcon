@@ -30,6 +30,13 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navigateHome = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+};
+
   return (
     <header className="fixed top-0 left-0 right-0 w-full z-50">
     <motion.nav
@@ -58,17 +65,30 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
-            <NavLink
-              key={link.name}
-              to={link.path}
-              className={({ isActive }) =>
-                `text-sm font-semibold transition-colors duration-300 ${
-                  isActive ? "text-secondary" : "text-white/85 hover:text-secondary"
-                }`
+         <NavLink
+            key={link.name}
+            to={link.path}
+            onClick={() => {
+              // Already on Home page
+              if (link.path === "/" && location.pathname === "/") {
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
               }
-            >
-              {link.name}
-            </NavLink>
+
+              setIsOpen(false);
+            }}
+            className={({ isActive }) =>
+              `text-sm font-semibold transition-colors duration-300 ${
+                isActive
+                  ? "text-secondary"
+                  : "text-white/85 hover:text-secondary"
+              }`
+            }
+          >
+            {link.name}
+          </NavLink>
           ))}
         </div>
 
