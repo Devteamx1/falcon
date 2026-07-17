@@ -225,12 +225,7 @@ if (name === "parentEmail") {
                   : "border-cloudSoft focus:border-sky"
               }`}
             />
-
-            {passwordError && (
-              <p className="text-red-500 text-sm mt-2">
-                {passwordError}
-              </p>
-            )}
+            {passwordError && (<p className="text-red-500 text-sm mt-2">{passwordError}</p>)}
 
           <input type="text" name="address" placeholder="Address" value={form.address} onChange={handleChange} className={inputClass} />
 

@@ -58,12 +58,10 @@ function App() {
         {/* <Route path="/demo" element={<Demo />} /> */}
         <Route path="/student/dashboard" element={<StudentDashboard />} />
         <Route path="/parent/dashboard" element={<ParentDashboard />} />
-
      {/* Admin Panel */}
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
       </Route>
-
       {/* <Route path="/" element={<Login />} /> */}
       <Route path="/admin/students" element={<StudentManagement />} />
       <Route path="/admin/courses" element={<CourseManagement/>}/>
