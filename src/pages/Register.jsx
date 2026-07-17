@@ -20,6 +20,11 @@ const Register = () => {
     address: "", course: "", batchTiming: "", parentEmail: "",
   });
 
+  const coursesData = [
+    {id:1,name:"Swimming"},
+    {id:1,name: "Top level"}
+  ]
+
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -230,12 +235,21 @@ if (name === "parentEmail") {
           <input type="text" name="address" placeholder="Address" value={form.address} onChange={handleChange} className={inputClass} />
 
           <div className="grid md:grid-cols-2 gap-4">
-            <select name="course" value={form.course} onChange={handleChange} required className={inputClass}>
-              <option value="">Select Course</option>
-              {courses.map((c) => (
-                <option key={c._id} value={c._id}>{c.title}</option>
-              ))}
-            </select>
+            <select
+               name="course"
+               value={form.coursesData}
+               onChange={handleChange}
+                required
+               className={inputClass}
+               >
+            <option value="">Select Course</option>
+
+            {coursesData.map((item) => (
+              <option key={item.id} value={item.name}>
+                {item.name}
+              </option>
+            ))}
+          </select>
             <select name="batchTiming" value={form.batchTiming} onChange={handleChange} className={inputClass}>
               <option value="">Preferred Batch Timing</option>
               <option value="Morning 6-8AM">Morning 6-8AM</option>
