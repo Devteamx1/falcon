@@ -17,10 +17,8 @@ const CoachManagement = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="space-y-8 p-10">
-
+    <div className="space-y-4 p-10">
       {/* ================= Header ================= */}
-
       <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-6">
 
         <div className="flex items-center gap-4">
@@ -28,7 +26,7 @@ const CoachManagement = () => {
           <button
             onClick={() => navigate("/admin")}
             className="
-              w-15 h-15
+              w-20 h-20
               rounded-xl
               bg-white
               shadow-md

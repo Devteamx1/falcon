@@ -12,7 +12,7 @@ const CommunicationManagement = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="space-y-8 p-10">
+    <div className="space-y-4 p-10">
 
       {/* Header */}
 
@@ -21,8 +21,8 @@ const CommunicationManagement = () => {
         <button
           onClick={() => navigate("/admin")}
           className="
-            w-15
-            h-15
+            w-20
+            h-20
             rounded-xl
             bg-white
             shadow-md

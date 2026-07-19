@@ -55,38 +55,29 @@ const DeletePaymentModal = () => {
 
           {/* Modal */}
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              scale: .85,
-              y: 60,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              scale: .85,
-              y: 60,
-            }}
-            transition={{ duration: .25 }}
-            className="
-              fixed
-              left-1/2
-              top-1/2
-              -translate-x-1/2
-              -translate-y-1/2
-              w-[95%]
-              md:w-120
-              bg-white
-              rounded-3xl
-              shadow-2xl
-              overflow-hidden
-              z-50
-            "
-          >
+{/* Modal Wrapper */}
+
+<div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+
+  <motion.div
+    initial={{
+      opacity: 0,
+      scale: 0.85,
+      y: 60,
+    }}
+    animate={{
+      opacity: 1,
+      scale: 1,
+      y: 0,
+    }}
+    exit={{
+      opacity: 0,
+      scale: 0.85,
+      y: 60,
+    }}
+    transition={{ duration: 0.25 }}
+    className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+  >
             {/* Header */}
 
             <div className="bg-red-50 p-8 flex flex-col items-center">
@@ -188,8 +179,9 @@ const DeletePaymentModal = () => {
             </div>
 
           </motion.div>
-
+</div>
         </>
+      
       )}
     </AnimatePresence>
   );

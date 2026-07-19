@@ -46,7 +46,7 @@ const AttendanceProfile = () => {
             animate={{ x: 0 }}
             exit={{ x: 450 }}
             transition={{ duration: .3 }}
-            className="fixed right-0 top-0 h-screen w-full md:w-107.5 bg-white shadow-2xl z-50 overflow-y-auto"
+            className="fixed right-0 top-0 h-screen w-full max-w-xl bg-white shadow-2xl z-[9999] overflow-y-auto p-2"
           >
             {/* Header */}
 

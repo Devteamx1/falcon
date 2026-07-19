@@ -68,19 +68,8 @@ const PaymentProfile = () => {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: .3 }}
-            className="
-              fixed
-              top-0
-              right-0
-              h-full
-              w-full
-              md:w-112.5
-              bg-white
-              shadow-2xl
-              z-50
-              overflow-y-auto
-            "
-          >
+            className="fixed right-0 top-0 h-screen w-full max-w-xl bg-white shadow-2xl z-[9999] overflow-y-auto p-2">
+
             {/* Header */}
 
             <div className="bg-green-600 text-white p-6">

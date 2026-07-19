@@ -41,30 +41,32 @@ const DeleteCoachModal = () => {
             className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
           />
 
-          {/* Modal */}
+            {/* Modal Wrapper */}
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.85,
-              y: 60,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.85,
-              y: 60,
-            }}
-            transition={{ duration: .25 }}
-           className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] md:w-125 bg-white rounded-3xl shadow-2xl overflow-hidden z-50">
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.85,
+                y: 60,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.85,
+                y: 60,
+              }}
+              transition={{ duration: 0.25 }}
+              className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden"
+            >
 
             {/* Header */}
 
-            <div className="bg-red-50 p-8 flex flex-col items-center">
+            <div className="bg-red-50 px-6 py-5 flex flex-col items-center">
 
               <div className="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
 
@@ -84,7 +86,7 @@ const DeleteCoachModal = () => {
 
             {/* Coach Info */}
 
-            <div className="px-8 py-6">
+            <div className="px-6 py-5">
 
               <div className="flex items-center gap-4">
 
@@ -116,13 +118,13 @@ const DeleteCoachModal = () => {
 
             {/* Footer */}
 
-            <div className="flex gap-4 p-6 border-t">
+            <div className="flex gap-3 p-5 border-t">
 
               <button
                 onClick={handleClose}
                 className="
                   flex-1
-                  py-3
+                  py-2.5
                   rounded-xl
                   border
                   border-gray-300
@@ -163,7 +165,7 @@ const DeleteCoachModal = () => {
             </div>
 
           </motion.div>
-
+  </div>
         </>
       )}
     </AnimatePresence>

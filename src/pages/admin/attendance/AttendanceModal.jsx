@@ -108,18 +108,29 @@ const AttendanceModal = () => {
             animate={{ x: 0 }}
             exit={{ x: 500 }}
             transition={{ duration: 0.3 }}
-            className="fixed right-0 top-0 h-screen w-full md:w-130 bg-white shadow-2xl z-50 overflow-y-auto"
-          >
+            className="fixed right-0 top-0 h-screen w-full md:w-[50%] xl:w-[40%] bg-white shadow-2xl z-50 overflow-y-auto">
             <div className="p-8">
+           <div className="sticky top-0 bg-white px-6 py-5 flex justify-between items-center">
+          <div>
+            <h2 className="text-2xl font-bold">
+              {selectedAttendance ? "Edit attendance" : "Add attendance"}
+            </h2>
 
-              <h2 className="text-2xl font-bold mb-8">
-
-                {selectedAttendance
-                  ? "Edit Attendance"
-                  : "Mark Attendance"}
-
-              </h2>
-
+            <p className="text-gray-500 mt-1">
+              Swimming Academy Couse Form
+            </p>
+          </div>
+            <button
+              type="button"
+              onClick={() => {
+                dispatch(closeModal());
+                toast("Cancelled");
+              }}
+              className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-red-500 hover:text-white transition"
+            >
+              ✕
+            </button>
+          </div>
               <form
                 onSubmit={handleSubmit}
                 className="space-y-5"

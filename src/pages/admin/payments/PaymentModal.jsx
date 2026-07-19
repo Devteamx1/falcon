@@ -104,12 +104,14 @@ const PaymentModal = () => {
           />
 
           {/* Modal */}
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
 
-          <motion.div
-            initial={{ opacity: 0, scale: .9 }}
+         <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: .9 }}
-            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] md:w-162.5 bg-white rounded-3xl shadow-2xl z-50 overflow-hidden"
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.25 }}
+            className="w-full max-w-3xl bg-white rounded-3xl shadow-2xl overflow-hidden"
           >
             {/* Header */}
 
@@ -272,7 +274,9 @@ const PaymentModal = () => {
             </form>
 
           </motion.div>
+          </div>
         </>
+      
       )}
     </AnimatePresence>
   );

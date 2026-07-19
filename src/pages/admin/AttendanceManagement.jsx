@@ -59,7 +59,7 @@ const AttendanceManagement = () => {
   ];
 
   return (
-    <div className="space-y-8 p-10">
+    <div className="space-y-4 p-10">
 
       {/* Header */}
 
@@ -68,7 +68,7 @@ const AttendanceManagement = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate("/admin")}
-            className="w-15 h-15 rounded-xl bg-white shadow border flex items-center justify-center hover:bg-blue-600 hover:text-white transition"
+            className="w-20 h-20 rounded-xl bg-white shadow border flex items-center justify-center hover:bg-blue-600 hover:text-white transition"
           >
             <FaArrowLeft />
           </button>

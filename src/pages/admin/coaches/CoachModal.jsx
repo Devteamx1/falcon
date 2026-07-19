@@ -142,12 +142,11 @@ const handleSubmit = (e) => {
             animate={{ x: 0 }}
             exit={{ x: 500 }}
             transition={{ duration: .3 }}
-            className="fixed right-0 top-0 h-screen w-full md:w-130 bg-white shadow-2xl z-50 overflow-y-auto"
-          >
+            className="fixed right-0 top-0 h-screen w-full md:w-[50%] xl:w-[40%] bg-white shadow-2xl z-50 overflow-y-auto">
 
             {/* Header */}
 
-            <div className="sticky top-0 bg-white border-b px-6 py-5 flex justify-between items-center">
+            <div className="sticky top-0 bg-white px-6 py-5 flex justify-between items-center">
 
               <div>
 

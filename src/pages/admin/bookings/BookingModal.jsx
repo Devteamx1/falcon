@@ -73,8 +73,8 @@ const BookingModal = () => {
             animate={{ x: 0 }}
             exit={{ x: 600 }}
             transition={{ duration: 0.35 }}
-            className="fixed right-0 top-0 h-screen w-full md:w-130 bg-white shadow-2xl z-50 overflow-y-auto"
-          >
+            className="fixed right-0 top-0 h-screen w-full md:w-[50%] xl:w-[40%] bg-white shadow-2xl z-50 overflow-y-auto">
+
             {/* Header */}
             <div className="sticky top-0 bg-white border-b px-6 py-5 flex justify-between items-center z-10">
               <div>

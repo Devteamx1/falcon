@@ -57,7 +57,7 @@ const BookingManagement = () => {
   ];
 
   return (
-    <div className="space-y-8 p-10">
+    <div className="space-y-4 p-10">
 
       {/* ================= HEADER ================= */}
 
@@ -67,7 +67,7 @@ const BookingManagement = () => {
 
           <button
             onClick={() => navigate("/admin")}
-            className=" w-15 h-15 rounded-xl bg-white shadow border flex items-center justify-center hover:bg-blue-600 hover:text-white transition"
+            className=" w-20 h-20 rounded-xl bg-white shadow border flex items-center justify-center hover:bg-blue-600 hover:text-white transition"
           >
             <FaArrowLeft />
           </button>
