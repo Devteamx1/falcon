@@ -35,6 +35,8 @@ const BookingModal = () => {
     remarks: "",
   };
 
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [formData, setFormData] = useState(initialForm);
 
   useEffect(() => {
@@ -46,11 +48,42 @@ const BookingModal = () => {
   }, [selectedBooking]);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+      const { name, value } = e.target;
+      if (name === "studentName") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setNameError("");
+        } else {
+          setNameError("Only letters are allowed.");
+        }
+        return;
+      }
+       // Phone Validation
+      if (name === "phone") {
+        // Numbers only & max 10 digits
+        if (/^\d{0,10}$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setPhoneError("")
+        }
+        else{
+          setPhoneError("Only numbers are allowed. ( 1 - 10)")
+        }
+        return;
+      }
+        // mail-validations
+        if (name === "email") {
+        setFormData({ ...formData, [name]: value });
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value === "" || emailRegex.test(value)) {
+          setEmailError("");
+        } else {
+          setEmailError("Please enter a valid email address.");
+        }
+        return;
+      }
+    setFormData({ ...formData, [name]: value });
+   }
 
   return (
     <AnimatePresence>
@@ -93,7 +126,7 @@ const BookingModal = () => {
             {/* Form */}
             <form className="p-6 space-y-6">
               <div className="space-y-5">
-                <h3 className="font-semibold text-lg text-slate-700 border-b pb-2">Student Information</h3>
+                <h3 className="font-semibold text-lg text-slate-700  pb-2">Student Information</h3>
                 {/* Student Name */}
                 <div>
                   <label className="block text-sm font-medium mb-2">Student Name</label>
@@ -103,8 +136,10 @@ const BookingModal = () => {
                     value={formData.studentName}
                     onChange={handleChange}
                     placeholder="Enter student name"
-                    className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                     nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                      />
+                      {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
                 </div>
                 {/* Phone */}
                 <div>
@@ -114,6 +149,7 @@ const BookingModal = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    required
                     placeholder="Enter phone number"
                     className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
                   />
@@ -127,8 +163,15 @@ const BookingModal = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Enter email"
-                    className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
+                    required
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition ${
+                        emailError
+                          ? "border-red-500"
+                          : "border-cloudSoft focus:border-sky"
+                      }`}
+                      />
+                  {emailError && (<p className="text-red-500 text-sm mt-2">{emailError}</p>)}
+                  
                 </div>
               </div>
 

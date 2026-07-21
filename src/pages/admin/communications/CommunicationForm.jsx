@@ -29,13 +29,45 @@ const CommunicationForm = () => {
     subject: "",
     message: "",
   });
+  const [nameError, setNameError] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+ const handleChange = (e) => {
+      const { name, value } = e.target;
+      if (name === "subject") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setNameError("");
+        } else {
+          setNameError("Only letters are allowed.");
+        }
+        return;
+      }
+       // Phone Validation
+      if (name === "phone") {
+        // Numbers only & max 10 digits
+        if (/^\d{0,10}$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setPhoneError("")
+        }
+        else{
+          setPhoneError("Only numbers are allowed. ( 1 - 10)")
+        }
+        return;
+      }
+        // mail-validations
+        if (name === "email") {
+        setFormData({ ...formData, [name]: value });
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value === "" || emailRegex.test(value)) {
+          setEmailError("");
+        } else {
+          setEmailError("Please enter a valid email address.");
+        }
+        return;
+      }
+    setFormData({ ...formData, [name]: value });
+   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -132,8 +164,10 @@ const CommunicationForm = () => {
             onChange={handleChange}
             placeholder="Enter subject..."
             required
-            className="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+            className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+               nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}/>
+              {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
+          
         </div>
 
         {/* Message */}

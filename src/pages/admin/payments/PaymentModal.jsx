@@ -14,11 +14,10 @@ import {
 const PaymentModal = () => {
   const dispatch = useDispatch();
 
-  const {
-    isModalOpen,
-    selectedPayment,
-  } = useSelector((state) => state.payments);
+  const {isModalOpen,selectedPayment} = useSelector((state) => state.payments);
 
+  const [nameError, setNameError] = useState("");
+  const [courseError, setCourseError] = useState("");
   const [formData, setFormData] = useState({
     studentName: "",
     profile: "",
@@ -51,12 +50,53 @@ const PaymentModal = () => {
     }
   }, [selectedPayment]);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+const handleChange = (e) => {
+      const { name, value } = e.target;
+      if (name === "studentName") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setNameError("");
+        } else {
+          setNameError("Only letters are allowed.");
+        }
+        return;
+      }
+        if (name === "course") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setCourseError("");
+        } else {
+          setCourseError("Only letters are allowed.");
+        }
+        return;
+      }
+       // Phone Validation
+      // if (name === "phone") {
+      //   // Numbers only & max 10 digits
+      //   if (/^\d{0,10}$/.test(value)) {
+      //     setFormData({ ...formData, [name]: value });
+      //     setPhoneError("")
+      //   }
+      //   else{
+      //     setPhoneError("Only numbers are allowed. ( 1 - 10)")
+      //   }
+      //   return;
+      // }
+        // mail-validations
+      //   if (name === "email") {
+      //   setFormData({ ...formData, [name]: value });
+      //   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      //   if (value === "" || emailRegex.test(value)) {
+      //     setEmailError("");
+      //   } else {
+      //     setEmailError("Please enter a valid email address.");
+      //   }
+      //   return;
+      // }
+    setFormData({ ...formData, [name]: value });
+   }
 
   const handleClose = () => {
     dispatch(closeModal());
@@ -161,9 +201,11 @@ const PaymentModal = () => {
                   value={formData.studentName}
                   onChange={handleChange}
                   placeholder="Student Name"
-                  className="border rounded-xl p-3"
                   required
-                />
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                     nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                      />
+                      {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
 
                 <input
                   name="profile"
@@ -178,9 +220,11 @@ const PaymentModal = () => {
                   value={formData.course}
                   onChange={handleChange}
                   placeholder="Course"
-                  className="border rounded-xl p-3"
                   required
-                />
+                     className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                     courseError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                      />
+                      {courseError && (<p className="text-red-500 text-sm mt-2">{courseError}</p>)}
 
                 <input
                   name="batch"

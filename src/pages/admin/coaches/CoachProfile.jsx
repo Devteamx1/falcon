@@ -14,21 +14,14 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  closeProfile,
-  clearSelectedCoach,
-} from "../../../redux/slice/coachSlice";
-
+import {closeProfile,clearSelectedCoach} from "../../../redux/slice/coachSlice";
 import CoachStatusBadge from "./CoachStatusBadge";
 import ExperienceBadge from "./ExperienceBadge";
 
 const CoachProfile = () => {
   const dispatch = useDispatch();
 
-  const {
-    isProfileOpen,
-    selectedCoach,
-  } = useSelector((state) => state.coaches);
+  const {isProfileOpen,selectedCoach} = useSelector((state) => state.coaches);
 
   const handleClose = () => {
     dispatch(closeProfile());

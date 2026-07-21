@@ -50,8 +50,6 @@ const studentSlice = createSlice({
         (student) => student.id !== action.payload
       );
 
-      state.selectedStudent = null;
-      state.isDeleteModalOpen = false;
     },
 
     // ===========================
@@ -100,7 +98,6 @@ const studentSlice = createSlice({
 
     closeModal: (state) => {
       state.isModalOpen = false;
-      state.selectedStudent = null;
     },
 
     // ===========================
@@ -113,7 +110,6 @@ const studentSlice = createSlice({
 
     closeProfile: (state) => {
       state.isProfileOpen = false;
-      state.selectedStudent = null;
     },
 
     // ===========================
@@ -126,7 +122,6 @@ const studentSlice = createSlice({
 
     closeDeleteModal: (state) => {
       state.isDeleteModalOpen = false;
-      state.selectedStudent = null;
     },
   },
 });

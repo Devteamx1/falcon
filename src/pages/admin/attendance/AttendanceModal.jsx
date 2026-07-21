@@ -13,13 +13,14 @@ import {
 const AttendanceModal = () => {
   const dispatch = useDispatch();
 
-  const {
-    isModalOpen,
-    selectedAttendance,
-    attendance,
-  } = useSelector((state) => state.attendance);
+  const {isModalOpen,selectedAttendance,attendance} = useSelector((state) => state.attendance);
 
+  const [nameError, setNameError] = useState("");
+  const [coachError, setCoachError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [formData, setFormData] = useState({
+
     studentName: "",
     studentId: "",
     coach: "",
@@ -53,12 +54,54 @@ const AttendanceModal = () => {
     }
   }, [selectedAttendance]);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+ const handleChange = (e) => {
+      const { name, value } = e.target;
+      if (name === "studentName") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setNameError("");
+        } else {
+          setNameError("Only letters are allowed.");
+        }
+        return;
+      }
+      // Coach name
+      if (name === "coach") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setCoachError("");
+        } else {
+          setCoachError("Only letters are allowed.");
+        }
+        return;
+      }
+       // Phone Validation
+      if (name === "phone") {
+        // Numbers only & max 10 digits
+        if (/^\d{0,10}$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setPhoneError("")
+        }
+        else{
+          setPhoneError("Only numbers are allowed. ( 1 - 10)")
+        }
+        return;
+      }
+        // mail-validations
+        if (name === "email") {
+        setFormData({ ...formData, [name]: value });
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value === "" || emailRegex.test(value)) {
+          setEmailError("");
+        } else {
+          setEmailError("Please enter a valid email address.");
+        }
+        return;
+      }
+    setFormData({ ...formData, [name]: value });
+   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,7 +158,6 @@ const AttendanceModal = () => {
             <h2 className="text-2xl font-bold">
               {selectedAttendance ? "Edit attendance" : "Add attendance"}
             </h2>
-
             <p className="text-gray-500 mt-1">
               Swimming Academy Couse Form
             </p>
@@ -143,9 +185,10 @@ const AttendanceModal = () => {
                   value={formData.studentName}
                   onChange={handleChange}
                   placeholder="Student Name"
-                  className="w-full border rounded-xl p-3"
-                  required
-                />
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                     nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                      />
+                      {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
 
                 {/* Student ID */}
 
@@ -167,9 +210,11 @@ const AttendanceModal = () => {
                   value={formData.coach}
                   onChange={handleChange}
                   placeholder="Coach Name"
-                  className="w-full border rounded-xl p-3"
                   required
-                />
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                     coachError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                      />
+                      {coachError && (<p className="text-red-500 text-sm mt-2">{coachError}</p>)}
 
                 {/* Batch */}
 

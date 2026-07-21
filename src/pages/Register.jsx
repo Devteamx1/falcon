@@ -140,8 +140,6 @@ if (name === "parentEmail") {
 
     return;
   }
-
-
   setForm({ ...form, [name]: value });
 };
 

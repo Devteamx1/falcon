@@ -6,10 +6,12 @@ import toast from "react-hot-toast";
 const StudentModal = () => {
   const dispatch = useDispatch();
 
-  const { isModalOpen, selectedStudent, students } = useSelector(
-    (state) => state.students
-  );
+  const { isModalOpen, selectedStudent, students } = useSelector((state) => state.students);
 
+  const [nameError, setNameError] = useState("");
+  const [coachError, setCoachError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -50,12 +52,53 @@ const StudentModal = () => {
     }
   }, [selectedStudent]);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+   const handleChange = (e) => {
+      const { name, value } = e.target;
+      if (name === "name") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setNameError("");
+        } else {
+          setNameError("Only letters are allowed.");
+        }
+        return;
+      }
+        if (name === "coach") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setCoachError("");
+        } else {
+          setCoachError("Only letters are allowed.");
+        }
+        return;
+      }
+       // Phone Validation
+      if (name === "phone") {
+        // Numbers only & max 10 digits
+        if (/^\d{0,10}$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setPhoneError("")
+        }
+        else{
+          setPhoneError("Only numbers are allowed. ( 1 - 10)")
+        }
+        return;
+      }
+        // mail-validations
+        if (name === "email") {
+        setFormData({ ...formData, [name]: value });
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value === "" || emailRegex.test(value)) {
+          setEmailError("");
+        } else {
+          setEmailError("Please enter a valid email address.");
+        }
+        return;
+      }
+    setFormData({ ...formData, [name]: value });
+   }
 
   const handleSubmit = (e) => {
   e.preventDefault();
@@ -143,16 +186,19 @@ const StudentModal = () => {
                   value={formData.name}
                   onChange={handleChange}
                   placeholder="Student Name"
-                  className="w-full border rounded-xl p-3"
                   required
-                />
-
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                     nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                      />
+                      {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
                 <input
+                  type="number"
                   name="age"
                   value={formData.age}
                   onChange={handleChange}
                   placeholder="Age"
-                  className="w-full border rounded-xl p-3"
+                  className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+
                 />
 
                 <select
@@ -170,17 +216,25 @@ const StudentModal = () => {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="Phone"
-                  className="w-full border rounded-xl p-3"
-                />
-
-                <input
+                  required
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition 
+                    ${phoneError? "border-red-500" : "border-cloudSoft focus:border-sky"}`}/>
+                    {phoneError && (<p className="text-red-500 text-sm mt-2">{phoneError}</p>)} 
+                  
+                  <input
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className="w-full border rounded-xl p-3"
-                />
-
+                  required
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition
+                       ${emailError
+                          ? "border-red-500"
+                          : "border-cloudSoft focus:border-sky"
+                         }`}
+                      />
+                     {emailError && (<p className="text-red-500 text-sm mt-2">{emailError}</p>)}
+     
                 <input
                   name="address"
                   value={formData.address}
@@ -194,8 +248,14 @@ const StudentModal = () => {
                   value={formData.coach}
                   onChange={handleChange}
                   placeholder="Coach Name"
-                  className="w-full border rounded-xl p-3"
-                />
+                  required
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition
+                       ${coachError
+                          ? "border-red-500"
+                          : "border-cloudSoft focus:border-sky"
+                         }`}
+                      />
+                     {coachError && (<p className="text-red-500 text-sm mt-2">{coachError}</p>)}
 
                 <select
                   name="batch"

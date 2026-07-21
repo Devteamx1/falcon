@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import {  FaEdit,FaTrash,FaEye} from "react-icons/fa";
-import { setSelectedStudent, openModal, openDeleteModal} from "../../../redux/slice/studentSlice";
+import { setSelectedStudent, openModal, openDeleteModal,openProfile,closeProfile,clearSelectedStudent} from "../../../redux/slice/studentSlice";
 import AttendanceStatus from "./AttendanceStatus";
 import FeeStatusBadge from "./FeeStatusBadge";
 
@@ -19,12 +19,13 @@ const StudentTable = () => {
         .includes(searchTerm.toLowerCase()) ||
       student.phone.includes(searchTerm);
 
-    const batchMatch =
-      selectedBatch === "All"
-        ? true
-        : student.batch === selectedBatch;
+    const batchMatch =selectedBatch === "All" ? true : student.batch === selectedBatch;
 
     return searchMatch && batchMatch;
+    const handleClose = () => {
+          dispatch(closeProfile());
+          dispatch(clearSelectedStudent());
+        };
   });
 
   return (
@@ -104,13 +105,10 @@ const StudentTable = () => {
                     status={student.feeStatus}
                   />
                 </td>
-
                 <td className="p-4">
-
                   <div className="flex gap-3">
-
                     <button
-                      onClick={() => {
+                    onClick={() => {
                       dispatch(setSelectedStudent(student));
                       dispatch(openProfile());
                     }}

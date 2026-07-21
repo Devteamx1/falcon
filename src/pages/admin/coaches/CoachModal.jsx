@@ -3,19 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence, motion } from "framer-motion";
 import { FaTimes } from "react-icons/fa";
 import toast from "react-hot-toast";
-
-import {
-  closeModal,
-  addCoach,
-  updateCoach,
-} from "../../../redux/slice/coachSlice";
+import {closeModal,addCoach,updateCoach}from "../../../redux/slice/coachSlice";
 
 const CoachModal = () => {
   const dispatch = useDispatch();
 
-  const { isModalOpen, selectedCoach } = useSelector(
-    (state) => state.coaches
-  );
+  const { isModalOpen, selectedCoach } = useSelector((state) => state.coaches);
 
   const initialForm = {
     name: "",
@@ -44,6 +37,9 @@ const CoachModal = () => {
     profile: "https://i.pravatar.cc/150",
   };
 
+  const [nameError, setNameError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [formData, setFormData] = useState(initialForm);
 
   // ==========================
@@ -61,20 +57,49 @@ const CoachModal = () => {
   // ==========================
   // Handle Change
   // ==========================
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+   const handleChange = (e) => {
+      const { name, value } = e.target;
+      if (name === "name") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setNameError("");
+        } else {
+          setNameError("Only letters are allowed.");
+        }
+        return;
+      }
+       // Phone Validation
+      if (name === "phone") {
+        // Numbers only & max 10 digits
+        if (/^\d{0,10}$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setPhoneError("")
+        }
+        else{
+          setPhoneError("Only numbers are allowed. ( 1 - 10)")
+        }
+        return;
+      }
+        // mail-validations
+        if (name === "email") {
+        setFormData({ ...formData, [name]: value });
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value === "" || emailRegex.test(value)) {
+          setEmailError("");
+        } else {
+          setEmailError("Please enter a valid email address.");
+        }
+        return;
+      }
+    setFormData({ ...formData, [name]: value });
+   }
   // ==========================
 // Submit Form
 // ==========================
 
 const handleSubmit = (e) => {
   e.preventDefault();
-
   if (
     !formData.name ||
     !formData.phone ||
@@ -122,11 +147,8 @@ const handleSubmit = (e) => {
     <AnimatePresence>
 
       {isModalOpen && (
-
         <>
-
           {/* Overlay */}
-
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -136,7 +158,6 @@ const handleSubmit = (e) => {
           />
 
           {/* Drawer */}
-
           <motion.div
             initial={{ x: 500 }}
             animate={{ x: 0 }}
@@ -145,25 +166,15 @@ const handleSubmit = (e) => {
             className="fixed right-0 top-0 h-screen w-full md:w-[50%] xl:w-[40%] bg-white shadow-2xl z-50 overflow-y-auto">
 
             {/* Header */}
-
             <div className="sticky top-0 bg-white px-6 py-5 flex justify-between items-center">
-
               <div>
-
                 <h2 className="text-2xl font-bold">
-
-                  {selectedCoach
-                    ? "Edit Coach"
-                    : "Add Coach"}
-
+                  {selectedCoach ? "Edit Coach" : "Add Coach"}
                 </h2>
-
                 <p className="text-gray-500 mt-1">
                   Swimming Academy Coach Form
                 </p>
-
               </div>
-
               <button
                 onClick={() => dispatch(closeModal())}
                 className="w-10 h-10 rounded-xl bg-slate-100 hover:bg-red-500 hover:text-white transition"
@@ -176,7 +187,6 @@ const handleSubmit = (e) => {
             {/* Form */}
 
             <form  onSubmit={handleSubmit} className="p-6 space-y-6">
-
               {/* =======================
                   Personal Information
               ======================= */}
@@ -190,20 +200,19 @@ const handleSubmit = (e) => {
                 {/* Name */}
 
                 <div>
-
                   <label className="block mb-2 font-medium">
                     Coach Name
                   </label>
-
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Enter coach name"
-                    className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
-                  />
-
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                     nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                      />
+                      {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
                 </div>
 
                 {/* Age */}
@@ -222,17 +231,14 @@ const handleSubmit = (e) => {
                     placeholder="Enter age"
                     className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
                   />
-
                 </div>
 
                 {/* Gender */}
 
                 <div>
-
                   <label className="block mb-2 font-medium">
                     Gender
                   </label>
-
                   <select
                     name="gender"
                     value={formData.gender}
@@ -246,63 +252,61 @@ const handleSubmit = (e) => {
                 </div>
 
                 {/* Phone */}
-
                 <div>
-
                   <label className="block mb-2 font-medium">
                     Phone
                   </label>
-
                   <input
                     type="text"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="9876543210"
-                    className="w-full border rounded-xl px-4 py-3"
-                  />
-
+                    maxLength={10}
+                    placeholder="Phone Number"
+                    required
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition ${
+                        phoneError
+                          ? "border-red-500"
+                          : "border-cloudSoft focus:border-sky"
+                      }`}
+                      />
+                      {phoneError && (<p className="text-red-500 text-sm mt-2">{phoneError}</p>)} 
                 </div>
 
                 {/* Email */}
 
                 <div>
-
                   <label className="block mb-2 font-medium">
                     Email
                   </label>
-
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="coach@gmail.com"
-                    className="w-full border rounded-xl px-4 py-3"
-                  />
-
+                    required
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition ${
+                        emailError
+                          ? "border-red-500"
+                          : "border-cloudSoft focus:border-sky"
+                      }`}
+                      />
+                  {emailError && (<p className="text-red-500 text-sm mt-2">{emailError}</p>)}
                 </div>
-
               </div>
 
-             {/* =======================
-    Professional Information
-======================= */}
+             {/* =======================Professional Information =================== */}
 
                 <div className="space-y-5">
-
                 <h3 className="font-semibold text-lg border-b pb-2">
                     Professional Information
                 </h3>
-
                 {/* Qualification */}
-
                 <div>
-
                     <label className="block mb-2 font-medium">
                     Qualification
                     </label>
-
                     <input
                     type="text"
                     name="qualification"
@@ -311,17 +315,14 @@ const handleSubmit = (e) => {
                     placeholder="NIS Certified"
                     className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
                     />
-
                 </div>
 
                 {/* Specialization */}
 
                 <div>
-
                     <label className="block mb-2 font-medium">
                     Specialization
                     </label>
-
                     <select
                     name="specialization"
                     value={formData.specialization}

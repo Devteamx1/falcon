@@ -12,6 +12,7 @@ const DeleteStudentModal = () => {
 
   const handleDelete = () => {
     if (!selectedStudent) return;
+    dispatch(deleteStudent(selectedStudent.id));
     toast.success("Student Deleted Successfully 🗑️");
     dispatch(closeDeleteModal());
     dispatch(clearSelectedStudent());

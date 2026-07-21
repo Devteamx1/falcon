@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import {clearSelectedStudent} from "../../../redux/slice/studentSlice";
-
+import {clearSelectedStudent,closeProfile} from "../../../redux/slice/studentSlice";
 import {
   FaUserGraduate,
   FaPhone,
@@ -16,7 +15,13 @@ import {
 const StudentProfile = () => {
   const dispatch = useDispatch();
 
-      const { selectedStudent, isProfileOpen } = useSelector((state) => state.students);
+  const { selectedStudent, isProfileOpen } = useSelector((state) => state.students);
+
+  const handleClose = () => {
+      dispatch(closeProfile());
+      dispatch(clearSelectedStudent());
+    };
+  if (!selectedStudent) return null;
 
   return (
     <AnimatePresence>
@@ -27,7 +32,7 @@ const StudentProfile = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => dispatch(closeProfile())}
+            onClick={handleClose}
             className="fixed inset-0 bg-black/40 z-40"
           />
 
@@ -37,35 +42,33 @@ const StudentProfile = () => {
             animate={{ x: 0 }}
             exit={{ x: 450 }}
             transition={{ duration: .3 }}
-            className="fixed top-0 right-0 h-screen w-full md:w-105 bg-white shadow-2xl z-50 overflow-y-auto"
-          >
-            <div className="p-6">
-
+            className="fixed right-0 top-0 h-screen w-full max-w-xl bg-white shadow-2xl z-[9999] overflow-y-auto ">
+         
               {/* Header */}
 
-              <div className="flex justify-between items-center">
+              <div className="sticky top-0 bg-white border-b px-6 py-5 flex justify-between items-center">
 
-                <h2 className="text-2xl font-bold">
-                  Student Profile
-                </h2>
+              <h2 className="text-2xl font-bold">
+                Student Profile
+              </h2>
 
-                <button
-                  onClick={() =>
-                    dispatch(clearSelectedStudent())
-                  }
-                >
-                  <FaTimes />
-                </button>
+              <button
+                onClick={handleClose}
+                className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-red-500 hover:text-white transition"
+              >
+                <FaTimes className="mx-auto" />
+              </button>
 
-              </div>
+            </div>
 
+            <div className="p-6">
               {/* Image */}
 
               <div className="mt-8 flex flex-col items-center">
 
                 <img
                   src={selectedStudent.profile}
-                  alt=""
+                  alt={selectedStudent.name}
                   className="w-32 h-32 rounded-full object-cover border-4 border-blue-500"
                 />
 
@@ -161,24 +164,20 @@ const StudentProfile = () => {
 };
 
 const Info = ({ icon, title, value }) => (
-  <div className="flex items-center gap-4 bg-gray-50 rounded-xl p-4">
+  <div className="flex items-center justify-between border rounded-xl p-4">
+    <div className="flex items-center gap-3">
+      <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
+        {icon}
+      </div>
 
-    <div className="text-blue-600 text-xl">
-      {icon}
-    </div>
-
-    <div>
-
-      <p className="text-gray-500 text-sm">
+      <span className="font-medium">
         {title}
-      </p>
-
-      <h4 className="font-semibold">
-        {value}
-      </h4>
-
+      </span>
     </div>
 
+    <span className="text-gray-600 text-right max-w-[180px] break-words">
+      {value}
+    </span>
   </div>
 );
 

@@ -28,10 +28,11 @@ const initialForm = {
 const CourseModal = () => {
   const dispatch = useDispatch();
 
-  const { isModalOpen, selectedCourse } = useSelector(
-    (state) => state.courses
-  );
-
+  const { isModalOpen, selectedCourse } = useSelector((state) => state.courses);
+  const [nameError, setNameError] = useState("");
+  const [trainerError, setTrainerError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [formData, setFormData] = useState(initialForm);
 
   useEffect(() => {
@@ -43,11 +44,52 @@ const CourseModal = () => {
   }, [selectedCourse]);
 
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+      const { name, value } = e.target;
+      if (name === "name") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setNameError("");
+        } else {
+          setNameError("Only letters are allowed.");
+        }
+        return;
+      }
+      if (name  === "trainer") {
+        // Only letters and spaces
+        if (/^[A-Za-z\s]*$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setTrainerError("");
+        } else {
+          setTrainerError("Only letters are allowed.");
+        }
+        return;
+      }
+       // Phone Validation
+      if (name === "phone") {
+        // Numbers only & max 10 digits
+        if (/^\d{0,10}$/.test(value)) {
+          setFormData({ ...formData, [name]: value });
+          setPhoneError("")
+        }
+        else{
+          setPhoneError("Only numbers are allowed. ( 1 - 10)")
+        }
+        return;
+      }
+        // mail-validations
+        if (name === "email") {
+        setFormData({ ...formData, [name]: value });
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (value === "" || emailRegex.test(value)) {
+          setEmailError("");
+        } else {
+          setEmailError("Please enter a valid email address.");
+        }
+        return;
+      }
+    setFormData({ ...formData, [name]: value });
+   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -122,15 +164,20 @@ const CourseModal = () => {
               ✕
             </button>
           </div>
+            {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-5" >
+                {/* Name */}
                 <input
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="Course Name"
-                    className="w-full border rounded-xl p-3"
-                    />
-
+                    placeholder=" EnterCourse Name"
+                    required
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                      nameError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                        />
+                        {nameError && (<p className="text-red-500 text-sm mt-2">{nameError}</p>)}
+                    {/* Course Code */}
                     <input
                     name="code"
                     value={formData.code}
@@ -138,38 +185,56 @@ const CourseModal = () => {
                     placeholder="Course Code"
                     className="w-full border rounded-xl p-3"
                     />
-
+                  {/* Trainer Name */}
                     <input
                     name="trainer"
                     value={formData.trainer}
                     onChange={handleChange}
                     placeholder="Trainer Name"
-                    className="w-full border rounded-xl p-3"
-                    />
+                    required
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 border-cloudSoft focus:outline-none focus:border-sky transition ${
+                      trainerError ? "border-red-500" : "border-cloudSoft focus:border-sky"}`}
+                        />
+                      {trainerError && (<p className="text-red-500 text-sm mt-2">{trainerError}</p>)}
 
                     <input
                     name="experience"
+                    type="number"
                     value={formData.experience}
                     onChange={handleChange}
+                    required
                     placeholder="Trainer Experience"
                     className="w-full border rounded-xl p-3"
                     />
 
                     <input
+                    type="text"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="Trainer Phone"
-                    className="w-full border rounded-xl p-3"
-                    />
+                    required
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition ${
+                        phoneError
+                          ? "border-red-500"
+                          : "border-cloudSoft focus:border-sky"
+                      }`}
+                      />
+                      {phoneError && (<p className="text-red-500 text-sm mt-2">{phoneError}</p>)}
 
                     <input
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Trainer Email"
-                    className="w-full border rounded-xl p-3"
-                    />
+                    required
+                    className={`w-full px-4 py-3.5 rounded-2xl border-2 focus:outline-none transition ${
+                        emailError
+                          ? "border-red-500"
+                          : "border-cloudSoft focus:border-sky"
+                      }`}
+                      />
+                  {emailError && (<p className="text-red-500 text-sm mt-2">{emailError}</p>)}
 
                     <input
                     name="duration"
